@@ -1,7 +1,17 @@
 ﻿namespace DddInPractice.Logic;
 
-public class Money : ValueObject<Money>
+public sealed class Money : ValueObject<Money>
 {
+    public static readonly Money None = new Money(0, 0, 0, 0, 0, 0);
+    public static readonly Money TenRub = new Money(1, 0, 0, 0, 0, 0);
+    public static readonly Money FiftyRub = new Money(0, 1, 0, 0, 0, 0);
+    public static readonly Money HundredRub = new Money(0, 0, 1, 0, 0, 0);
+    public static readonly Money FiveHundredRub = new Money(0, 0, 0, 1, 0, 0);
+    public static readonly Money ThousandRub = new Money(0, 0, 0, 0, 1, 0);
+    public static readonly Money FiveThousandRub = new Money(0, 0, 0, 0, 0, 1);
+
+
+
     public int TenRubCount { get; }
     public int FiftyRubCount { get; }
     public int HundredRubCount { get; }
