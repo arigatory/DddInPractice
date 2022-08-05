@@ -1,6 +1,6 @@
 ﻿namespace DddInPractice.Logic;
 
-public class Money
+public class Money : ValueObject<Money>
 {
     public int TenRubCount { get; set; }
     public int FiftyRubCount { get; set; }
@@ -36,5 +36,29 @@ public class Money
             money1.FiveThousandRubCount + money2.FiveThousandRubCount);
 
         return sum;
+    }
+
+    protected override bool EqualsCore(Money other)
+    {
+        return TenRubCount == other.TenRubCount
+            && FiftyRubCount == other.FiftyRubCount
+            && HundredRubCount == other.HundredRubCount
+            && FiveHundredRubCount == other.FiveHundredRubCount
+            && ThousandRubCount == other.ThousandRubCount
+            && FiveThousandRubCount == other.FiveThousandRubCount;
+    }
+
+    protected override int GetHashCodeCore()
+    {
+        unchecked
+        {
+            int hashCode = TenRubCount;
+            hashCode = (hashCode * 397) ^ FiftyRubCount;
+            hashCode = (hashCode * 397) ^ HundredRubCount;
+            hashCode = (hashCode * 397) ^ FiveHundredRubCount;
+            hashCode = (hashCode * 397) ^ ThousandRubCount;
+            hashCode = (hashCode * 397) ^ FiveThousandRubCount;
+            return hashCode;
+        }
     }
 }

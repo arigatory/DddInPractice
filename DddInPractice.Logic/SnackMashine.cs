@@ -1,25 +1,24 @@
-﻿namespace DddInPractice.Logic
+﻿namespace DddInPractice.Logic;
+
+public sealed class SnackMashine : Entity
 {
-    public sealed class SnackMashine
+    public Money MoneyInside { get; private set; }
+    public Money MoneyInTransaction { get; private set; }
+
+    public void InsertMoney(Money money)
     {
-        public Money MoneyInside { get; private set; }
-        public Money MoneyInTransaction { get; private set; }
+        MoneyInTransaction += money;
+    }
 
-        public void InsertMoney(Money money)
-        {
-            MoneyInTransaction += money;
-        }
+    public void ReturnMoney()
+    {
+        //MoneyInTransaction = 0;
+    }
 
-        public void ReturnMoney()
-        {
-            //MoneyInTransaction = 0;
-        }
+    public void BuySnack()
+    {
+        MoneyInside += MoneyInTransaction;
 
-        public void BuySnack()
-        {
-            MoneyInside += MoneyInTransaction;
-
-            // MoneyInTransaction = 0;
-        }
+        // MoneyInTransaction = 0;
     }
 }
