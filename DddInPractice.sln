@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DddInPractice.Logic", "DddInPractice.Logic\DddInPractice.Logic.csproj", "{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E938F0CA-BF4A-4EEF-BB27-F90C5C2CE12E}
+	EndGlobalSection
+EndGlobal
