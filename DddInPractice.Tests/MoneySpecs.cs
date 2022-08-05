@@ -1,6 +1,3 @@
-using DddInPractice.Logic;
-using FluentAssertions;
-
 namespace DddInPractice.Tests;
 
 public class MoneySpecs
