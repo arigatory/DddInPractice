@@ -2,12 +2,19 @@
 
 public class Money : ValueObject<Money>
 {
-    public int TenRubCount { get; set; }
-    public int FiftyRubCount { get; set; }
-    public int HundredRubCount { get; set; }
-    public int FiveHundredRubCount { get; set; }
-    public int ThousandRubCount { get; set; }
-    public int FiveThousandRubCount { get; set; }
+    public int TenRubCount { get; }
+    public int FiftyRubCount { get; }
+    public int HundredRubCount { get; }
+    public int FiveHundredRubCount { get; }
+    public int ThousandRubCount { get; }
+    public int FiveThousandRubCount { get; }
+
+    public int Amount => TenRubCount * 10 +
+                FiftyRubCount * 50 +
+                HundredRubCount * 100 +
+                FiveHundredRubCount * 500 +
+                ThousandRubCount * 1000 +
+                FiveThousandRubCount * 5000;
 
     public Money(
         int tenRubCount,
@@ -17,6 +24,19 @@ public class Money : ValueObject<Money>
         int thousandRubCount,
         int fiveThousandRubCount)
     {
+        if (tenRubCount < 0)
+            throw new InvalidOperationException();
+        if (fiftyRubCount < 0)
+            throw new InvalidOperationException();
+        if (hundredRubCount < 0)
+            throw new InvalidOperationException();
+        if (fiveHundredRubCount < 0)
+            throw new InvalidOperationException();
+        if (thousandRubCount < 0)
+            throw new InvalidOperationException();
+        if (fiveThousandRubCount < 0)
+            throw new InvalidOperationException();
+
         TenRubCount = tenRubCount;
         FiftyRubCount = fiftyRubCount;
         HundredRubCount = hundredRubCount;
@@ -34,6 +54,19 @@ public class Money : ValueObject<Money>
             money1.FiveHundredRubCount + money2.FiveHundredRubCount,
             money1.ThousandRubCount + money2.ThousandRubCount,
             money1.FiveThousandRubCount + money2.FiveThousandRubCount);
+
+        return sum;
+    }
+
+    public static Money operator -(Money money1, Money money2)
+    {
+        Money sum = new Money(
+            money1.TenRubCount - money2.TenRubCount,
+            money1.FiftyRubCount - money2.FiftyRubCount,
+            money1.HundredRubCount - money2.HundredRubCount,
+            money1.FiveHundredRubCount - money2.FiveHundredRubCount,
+            money1.ThousandRubCount - money2.ThousandRubCount,
+            money1.FiveThousandRubCount - money2.FiveThousandRubCount);
 
         return sum;
     }

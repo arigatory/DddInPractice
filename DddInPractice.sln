@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DddInPractice.Logic", "DddInPractice.Logic\DddInPractice.Logic.csproj", "{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DddInPractice.Tests", "DddInPractice.Tests\DddInPractice.Tests.csproj", "{B15DF2B7-2FE3-4EB4-AD1C-E063C69AB5EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F839FFC8-6B0A-41A4-9965-446F9DAFD79C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B15DF2B7-2FE3-4EB4-AD1C-E063C69AB5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B15DF2B7-2FE3-4EB4-AD1C-E063C69AB5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B15DF2B7-2FE3-4EB4-AD1C-E063C69AB5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B15DF2B7-2FE3-4EB4-AD1C-E063C69AB5EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
