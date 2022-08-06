@@ -1,6 +1,5 @@
 ﻿using DddInPractice.Logic;
 using DddInPractice.UI.Common;
-using NHibernate;
 using System;
 
 namespace DddInPractice.UI;
@@ -51,12 +50,6 @@ public class SnackMachineViewModel : ViewModel
     private void BuySnack()
     {
         _snackMashine.BuySnack();
-        using (ISession session = SessionFactory.OpenSession())
-        using (ITransaction transaction = session.BeginTransaction())
-        {
-            session.SaveOrUpdate(_snackMashine);
-            transaction.Commit();
-        }
         NotifyClient("Вы купили товар");
 
     }

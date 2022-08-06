@@ -37,16 +37,17 @@ public class SnackMachineSpecs
     }
 
     [Fact]
-    public void Money_in_transaction_goes_to_money_inside_after_purchase()
+    public void BuySnack_trades_inserted_money_for_a_snack()
     {
         var snackMachine = new SnackMachine();
-        snackMachine.InsertMoney(HundredRub);
+        snackMachine.LoadSnacks(1, new Snack("Some snack"), 10, 100);
         snackMachine.InsertMoney(HundredRub);
 
-        snackMachine.BuySnack();
+        snackMachine.BuySnack(1);
 
 
         snackMachine.MoneyInTransaction.Should().Be(None);
-        snackMachine.MoneyInside.Amount.Should().Be(200);
-    }
+        snackMachine.MoneyInside.Amount.Should().Be(100);
+        snackMachine.Slots.Single(x=>x.Position == 1).Quantity.Should().Be(9);
+        }
 }
