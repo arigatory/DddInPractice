@@ -6,7 +6,7 @@ public class SnackMachineSpecs
     [Fact]
     public void Return_money_empties_money_in_transaction()
     {
-        var snackMachine = new SnackMashine();
+        var snackMachine = new SnackMachine();
         snackMachine.InsertMoney(FiveHundredRub);
 
         snackMachine.ReturnMoney();
@@ -18,7 +18,7 @@ public class SnackMachineSpecs
     [Fact]
     public void Inserted_money_goes_to_money_in_transaction()
     {
-        var snackMachine = new SnackMashine();
+        var snackMachine = new SnackMachine();
         snackMachine.InsertMoney(TenRub);
         snackMachine.InsertMoney(ThousandRub);
 
@@ -28,7 +28,7 @@ public class SnackMachineSpecs
     [Fact]
     public void Cannot_insert_more_than_one_note_at_a_time()
     {
-        var snackMachine = new SnackMashine();
+        var snackMachine = new SnackMachine();
         var twentyRub = TenRub + TenRub;
 
         Action action = () => snackMachine.InsertMoney(twentyRub);
@@ -39,7 +39,7 @@ public class SnackMachineSpecs
     [Fact]
     public void Money_in_transaction_goes_to_money_inside_after_purchase()
     {
-        var snackMachine = new SnackMashine();
+        var snackMachine = new SnackMachine();
         snackMachine.InsertMoney(HundredRub);
         snackMachine.InsertMoney(HundredRub);
 

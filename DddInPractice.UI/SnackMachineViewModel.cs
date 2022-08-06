@@ -1,12 +1,13 @@
 ﻿using DddInPractice.Logic;
 using DddInPractice.UI.Common;
+using NHibernate;
 using System;
 
 namespace DddInPractice.UI;
 
 public class SnackMachineViewModel : ViewModel
 {
-    private readonly SnackMashine _snackMashine;
+    private readonly SnackMachine _snackMashine;
 
     public override string Caption => "Snack Machine";
     public string MoneyInTransaction => _snackMashine.MoneyInTransaction.ToString();
@@ -32,7 +33,7 @@ public class SnackMachineViewModel : ViewModel
     public Command ReturnMoneyCommand { get; private set; }
     public Command BuySnackCommand { get; private set; }
 
-    public SnackMachineViewModel(SnackMashine snackMashine)
+    public SnackMachineViewModel(SnackMachine snackMashine)
     {
         _snackMashine = snackMashine;
 
@@ -50,6 +51,12 @@ public class SnackMachineViewModel : ViewModel
     private void BuySnack()
     {
         _snackMashine.BuySnack();
+        using (ISession session = SessionFactory.OpenSession())
+        using (ITransaction transaction = session.BeginTransaction())
+        {
+            session.SaveOrUpdate(_snackMashine);
+            transaction.Commit();
+        }
         NotifyClient("Вы купили товар");
 
     }
