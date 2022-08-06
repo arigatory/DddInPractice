@@ -104,4 +104,9 @@ public sealed class Money : ValueObject<Money>
             return hashCode;
         }
     }
+
+    public override string ToString()
+    {
+        return Amount.ToString() + "₽";
+    }
 }
