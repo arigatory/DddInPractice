@@ -26,13 +26,18 @@ public sealed class Money : ValueObject<Money>
                 ThousandRubCount * 1000 +
                 FiveThousandRubCount * 5000;
 
+    private Money()
+    {
+
+    }
+
     public Money(
         int tenRubCount,
         int fiftyRubCount,
         int hundredRubCount,
         int fiveHundredRubCount,
         int thousandRubCount,
-        int fiveThousandRubCount)
+        int fiveThousandRubCount) : this()
     {
         if (tenRubCount < 0)
             throw new InvalidOperationException();

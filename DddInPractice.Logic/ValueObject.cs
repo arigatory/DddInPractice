@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DddInPractice.Logic;
+﻿namespace DddInPractice.Logic;
 
 public abstract class ValueObject<T>
     where T : ValueObject<T>
@@ -15,7 +9,7 @@ public abstract class ValueObject<T>
 
         if (ReferenceEquals(valueObject, null))
             return false;
-            
+
         return EqualsCore(valueObject);
 
     }
