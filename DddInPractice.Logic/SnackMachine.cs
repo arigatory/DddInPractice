@@ -3,9 +3,9 @@ using static DddInPractice.Logic.Money;
 
 public class SnackMachine : Entity
 {
-    public Money MoneyInside { get; private set; }
-    public Money MoneyInTransaction { get; private set; }
-    public virtual IList<Slot> Slots { get; private set; }
+    public virtual Money MoneyInside { get; protected set; }
+    public virtual Money MoneyInTransaction { get; protected set; }
+    public virtual IList<Slot> Slots { get; protected set; }
 
     public SnackMachine()
     {
@@ -31,7 +31,7 @@ public class SnackMachine : Entity
         };
     }
 
-    public void InsertMoney(Money money)
+    public virtual void InsertMoney(Money money)
     {
         Money[] notes = { TenRub, FiftyRub, HundredRub, FiveHundredRub, ThousandRub, FiveThousandRub };
         if (!notes.Contains(money))
@@ -40,12 +40,12 @@ public class SnackMachine : Entity
         MoneyInTransaction += money;
     }
 
-    public void ReturnMoney()
+    public virtual void ReturnMoney()
     {
         MoneyInTransaction = None;
     }
 
-    public void BuySnack(int position = 0)
+    public virtual void BuySnack(int position = 0)
     {
         Slot slot = Slots.Single(x=>x.Position == position);
         slot.Quantity--;
@@ -54,7 +54,7 @@ public class SnackMachine : Entity
         MoneyInTransaction = None;
     }
 
-    public void LoadSnacks(int position, Snack snack, int quantity, int price)
+    public virtual void LoadSnacks(int position, Snack snack, int quantity, int price)
     {
         Slot slot = Slots.Single(x => x.Position == position);
         slot.Snack = snack;
