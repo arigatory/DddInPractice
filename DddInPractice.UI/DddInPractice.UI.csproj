@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\1000rub.jpg" />
+    <None Remove="Images\100rub.jpg" />
+    <None Remove="Images\10rub.png" />
+    <None Remove="Images\5000rub.webp" />
+    <None Remove="Images\500rub.jpg" />
+    <None Remove="Images\50rub.jpg" />
+    <None Remove="Images\Chocolate.png" />
+    <None Remove="Images\Gum.png" />
+    <None Remove="Images\Icon.png" />
+    <None Remove="Images\Soda.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="SnackMachineViewModel.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DddInPractice.Logic\DddInPractice.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\1000rub.jpg" />
+    <Resource Include="Images\100rub.jpg" />
+    <Resource Include="Images\10rub.png" />
+    <Resource Include="Images\5000rub.webp" />
+    <Resource Include="Images\500rub.jpg" />
+    <Resource Include="Images\50rub.jpg" />
+    <Resource Include="Images\Chocolate.png" />
+    <Resource Include="Images\Gum.png" />
+    <Resource Include="Images\Icon.png" />
+    <Resource Include="Images\Soda.png" />
+    <Resource Include="SnackMachineViewModel.xaml">
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>
