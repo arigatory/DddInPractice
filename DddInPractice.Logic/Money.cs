@@ -60,6 +60,28 @@ public sealed class Money : ValueObject<Money>
         FiveThousandRubCount = fiveThousandRubCount;
     }
 
+    internal Money Allocate(int amount)
+    {
+        int fiveThousandRubCount = Math.Min(amount / 5000, FiveThousandRubCount);
+        amount = amount - fiveThousandRubCount * 5000;
+
+        int thousandRubCount = Math.Min(amount / 1000, ThousandRubCount);
+        amount = amount - thousandRubCount * 1000;
+
+        int fiveHundredRubCount = Math.Min(amount / 500, FiveHundredRubCount);
+        amount = amount - fiveHundredRubCount * 500;
+
+        int hundredRubCount = Math.Min(amount / 100, HundredRubCount);
+        amount = amount - hundredRubCount * 100;
+
+        int fiftyRubCount = Math.Min(amount / 50, FiftyRubCount);
+        amount = amount - fiftyRubCount * 50;
+
+        int tenRubCount = Math.Min(amount / 10, TenRubCount);
+
+        return new Money(tenRubCount, fiftyRubCount, hundredRubCount, fiveHundredRubCount, thousandRubCount, fiveThousandRubCount);
+    }
+
     public static Money operator +(Money money1, Money money2)
     {
         Money sum = new Money(
