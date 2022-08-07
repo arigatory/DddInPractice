@@ -2,6 +2,8 @@
 
 public sealed class SnackPile : ValueObject<SnackPile>
 {
+    public static readonly SnackPile Empty = new SnackPile(Snack.None, 0, 0);
+
     public Snack Snack { get; }
     public int Quantity { get; }
     public int Price { get; }
