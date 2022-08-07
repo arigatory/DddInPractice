@@ -108,6 +108,19 @@ public sealed class Money : ValueObject<Money>
         return sum;
     }
 
+    public static Money operator *(Money money1, int multiplier)
+    {
+        Money prod = new Money(
+            money1.TenRubCount * multiplier,
+            money1.FiftyRubCount * multiplier,
+            money1.HundredRubCount * multiplier,
+            money1.FiveHundredRubCount * multiplier,
+            money1.ThousandRubCount * multiplier,
+            money1.FiveThousandRubCount * multiplier);
+
+        return prod;
+    }
+
     protected override bool EqualsCore(Money other)
     {
         return TenRubCount == other.TenRubCount

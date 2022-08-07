@@ -54,7 +54,11 @@ public class SnackMachine : AggregateRoot
             throw new InvalidOperationException();
 
         slot.SnackPile = slot.SnackPile.SubtractOne();
+        Money change = MoneyInside.Allocate(MoneyInTransaction - slot.SnackPile.Price);
+        if(change.Amount < MoneyInTransaction - slot.SnackPile.Price)
+            throw new InvalidOperationException();
 
+        MoneyInside -= change;
         MoneyInTransaction = 0;
     }
 

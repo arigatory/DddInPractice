@@ -89,4 +89,31 @@ public class SnackMachineSpecs
         snackMachine.MoneyInside.FiveHundredRubCount.Should().Be(0);
         snackMachine.MoneyInside.HundredRubCount.Should().Be(5);
     }
+
+    [Fact]
+    public void After_purchase_change_is_returnded()
+    {
+        SnackMachine snackMachine = new SnackMachine();
+        snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 1, 50));
+        snackMachine.LoadMoney(TenRub * 10);
+
+        snackMachine.InsertMoney(HundredRub);
+        snackMachine.BuySnack(1);
+
+        snackMachine.MoneyInside.Amount.Should().Be(150);
+        snackMachine.MoneyInTransaction.Should().Be(0);
+    }
+
+    [Fact]
+    public void Cannot_buy_snack_if_not_enough_change()
+    {
+        SnackMachine snackMachine = new SnackMachine();
+        snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 1, 50));
+        snackMachine.InsertMoney(HundredRub);
+        
+        Action action = () => snackMachine.BuySnack(1);
+
+        action.Should().Throw<InvalidOperationException>();
+    }
+
 }
