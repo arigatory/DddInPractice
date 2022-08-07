@@ -1,34 +1,33 @@
 ﻿namespace DddInPractice.Logic;
 using static DddInPractice.Logic.Money;
 
-public class SnackMachine : Entity
+public class SnackMachine : AggregateRoot 
 {
     public virtual Money MoneyInside { get; protected set; }
-    public virtual Money MoneyInTransaction { get; protected set; }
-    public virtual IList<Slot> Slots { get; protected set; }
+    public virtual int MoneyInTransaction { get; protected set; }
+    protected virtual IList<Slot> Slots { get; set; }
 
     public SnackMachine()
     {
         MoneyInside = None;
-        MoneyInTransaction = None;
+        MoneyInTransaction = 0;
         Slots = new List<Slot>
         {
-            new Slot(snackMachine: this,
-            position: 1,
-            snack: null,
-            quantity: 0,
-            price: 0),
-            new Slot(snackMachine: this,
-            position: 2,
-            snack: null,
-            quantity: 0,
-            price: 0),
-            new Slot(snackMachine: this,
-            position: 3,
-            snack: null,
-            quantity: 0,
-            price: 0)
+            new Slot(this, 1),
+            new Slot(this, 2),
+            new Slot(this, 3)
         };
+    }
+
+    public virtual SnackPile GetSnackPile(int position)
+    {
+        return GetSlot(position).SnackPile;
+    }
+
+    private Slot GetSlot(int position)
+    {
+        return Slots.Single(x => x.Position == position);
+
     }
 
     public virtual void InsertMoney(Money money)
@@ -37,28 +36,40 @@ public class SnackMachine : Entity
         if (!notes.Contains(money))
             throw new InvalidOperationException();
 
-        MoneyInTransaction += money;
+        MoneyInTransaction += money.Amount;
+        MoneyInside += money;
     }
 
     public virtual void ReturnMoney()
     {
-        MoneyInTransaction = None;
+        Money moneyToReturn = MoneyInside.Allocate(MoneyInTransaction);
+        MoneyInside -= moneyToReturn;
+        MoneyInTransaction = 0;
     }
 
-    public virtual void BuySnack(int position = 0)
+    public virtual void BuySnack(int position)
     {
-        Slot slot = Slots.Single(x=>x.Position == position);
-        slot.Quantity--;
+        Slot slot = GetSlot(position);
+        if (slot.SnackPile.Price > MoneyInTransaction)
+            throw new InvalidOperationException();
 
-        MoneyInside += MoneyInTransaction;
-        MoneyInTransaction = None;
+        slot.SnackPile = slot.SnackPile.SubtractOne();
+        Money change = MoneyInside.Allocate(MoneyInTransaction - slot.SnackPile.Price);
+        if(change.Amount < MoneyInTransaction - slot.SnackPile.Price)
+            throw new InvalidOperationException();
+
+        MoneyInside -= change;
+        MoneyInTransaction = 0;
     }
 
-    public virtual void LoadSnacks(int position, Snack snack, int quantity, int price)
+    public virtual void LoadSnacks(int position, SnackPile snackPile)
     {
-        Slot slot = Slots.Single(x => x.Position == position);
-        slot.Snack = snack;
-        slot.Quantity = quantity;
-        slot.Price = price;
+        Slot slot = GetSlot(position);
+        slot.SnackPile = snackPile;
+    }
+
+    public virtual void LoadMoney(Money money)
+    {
+        MoneyInside += money;
     }
 }

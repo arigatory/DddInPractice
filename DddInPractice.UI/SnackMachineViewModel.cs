@@ -10,7 +10,7 @@ public class SnackMachineViewModel : ViewModel
 
     public override string Caption => "Snack Machine";
     public string MoneyInTransaction => _snackMashine.MoneyInTransaction.ToString();
-    public Money MoneyInside => _snackMashine.MoneyInside + _snackMashine.MoneyInTransaction;
+    public Money MoneyInside => _snackMashine.MoneyInside;
 
     private string _message = "";
     public string Message
@@ -49,7 +49,7 @@ public class SnackMachineViewModel : ViewModel
 
     private void BuySnack()
     {
-        _snackMashine.BuySnack();
+        _snackMashine.BuySnack(1);
         NotifyClient("Вы купили товар");
 
     }

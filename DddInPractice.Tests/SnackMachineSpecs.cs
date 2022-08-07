@@ -11,7 +11,7 @@ public class SnackMachineSpecs
 
         snackMachine.ReturnMoney();
 
-        snackMachine.MoneyInTransaction.Amount.Should().Be(0);
+        snackMachine.MoneyInTransaction.Should().Be(0);
 
     }
 
@@ -22,7 +22,7 @@ public class SnackMachineSpecs
         snackMachine.InsertMoney(TenRub);
         snackMachine.InsertMoney(ThousandRub);
 
-        snackMachine.MoneyInTransaction.Amount.Should().Be(1010);
+        snackMachine.MoneyInTransaction.Should().Be(1010);
     }
 
     [Fact]
@@ -40,14 +40,80 @@ public class SnackMachineSpecs
     public void BuySnack_trades_inserted_money_for_a_snack()
     {
         var snackMachine = new SnackMachine();
-        snackMachine.LoadSnacks(1, new Snack("Some snack"), 10, 100);
+        snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 10, 100));
         snackMachine.InsertMoney(HundredRub);
 
         snackMachine.BuySnack(1);
 
 
-        snackMachine.MoneyInTransaction.Should().Be(None);
+        snackMachine.MoneyInTransaction.Should().Be(0);
         snackMachine.MoneyInside.Amount.Should().Be(100);
-        snackMachine.Slots.Single(x=>x.Position == 1).Quantity.Should().Be(9);
-        }
+        snackMachine.GetSnackPile(1).Quantity.Should().Be(9);
+    }
+
+    [Fact]
+    public void Cannot_make_purchase_when_there_is_no_snacks()
+    {
+        var snackMachine = new SnackMachine();
+
+        Action action = () => { snackMachine.BuySnack(1); };
+
+        action.Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
+    public void Cannot_make_purchase_if_not_enough_money_inserted()
+    {
+        var snackMachine = new SnackMachine();
+        snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 1, 100));
+        snackMachine.InsertMoney(TenRub);
+
+        Action action = () => snackMachine.BuySnack(1);
+
+        action.Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
+    public void Snack_machine_returns_money_with_highest_denominatiuon_first()
+    {
+        SnackMachine snackMachine = new SnackMachine();
+        snackMachine.LoadMoney(FiveHundredRub);
+
+        snackMachine.InsertMoney(HundredRub);
+        snackMachine.InsertMoney(HundredRub);
+        snackMachine.InsertMoney(HundredRub);
+        snackMachine.InsertMoney(HundredRub);
+        snackMachine.InsertMoney(HundredRub);
+        snackMachine.ReturnMoney();
+
+        snackMachine.MoneyInside.FiveHundredRubCount.Should().Be(0);
+        snackMachine.MoneyInside.HundredRubCount.Should().Be(5);
+    }
+
+    [Fact]
+    public void After_purchase_change_is_returnded()
+    {
+        SnackMachine snackMachine = new SnackMachine();
+        snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 1, 50));
+        snackMachine.LoadMoney(TenRub * 10);
+
+        snackMachine.InsertMoney(HundredRub);
+        snackMachine.BuySnack(1);
+
+        snackMachine.MoneyInside.Amount.Should().Be(150);
+        snackMachine.MoneyInTransaction.Should().Be(0);
+    }
+
+    [Fact]
+    public void Cannot_buy_snack_if_not_enough_change()
+    {
+        SnackMachine snackMachine = new SnackMachine();
+        snackMachine.LoadSnacks(1, new SnackPile(new Snack("Some snack"), 1, 50));
+        snackMachine.InsertMoney(HundredRub);
+        
+        Action action = () => snackMachine.BuySnack(1);
+
+        action.Should().Throw<InvalidOperationException>();
+    }
+
 }
