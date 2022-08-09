@@ -6,7 +6,8 @@ namespace DddInPractice.UI.Common
     {
         public MainViewModel()
         {
-            var viewModel = new SnackMachineViewModel(new SnackMachine());
+            SnackMachine snackMachine = new SnackMachineRepository().GetById(1);
+            var viewModel = new SnackMachineViewModel(snackMachine);
             _dialogService.ShowDialog(viewModel);
         }
     }

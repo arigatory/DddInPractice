@@ -1,31 +1,25 @@
 ﻿using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DddInPractice.Logic
+namespace DddInPractice.Logic;
+
+public abstract class Repository<T>
+    where T : AggregateRoot
 {
-    public abstract class Repository<T>
-        where T : AggregateRoot
+    public T GetById(long id)
     {
-        public T GetById(long id)
+        using (ISession session = SessionFactory.OpenSession())
         {
-            using (ISession session = SessionFactory.OpenSession())
-            {
-                return session.Get<T>(id);
-            }
+            return session.Get<T>(id);
         }
+    }
 
-        public void Save(T aggregateRoot)
+    public void Save(T aggregateRoot)
+    {
+        using (ISession session = SessionFactory.OpenSession())
+        using (ITransaction transaction = session.BeginTransaction())
         {
-            using (ISession session = SessionFactory.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
-            {
-                session.SaveOrUpdate(aggregateRoot);
-                transaction.Commit();
-            }
+            session.SaveOrUpdate(aggregateRoot);
+            transaction.Commit();
         }
     }
 }
