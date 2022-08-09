@@ -60,7 +60,21 @@ public sealed class Money : ValueObject<Money>
         FiveThousandRubCount = fiveThousandRubCount;
     }
 
-    internal Money Allocate(int amount)
+    public bool CanAllocate(int amount)
+    {
+        Money money = AllocateCore(amount);
+        return money.Amount == amount;
+    }
+
+    public Money Allocate(int amount)
+    {
+        if(!CanAllocate(amount))
+            throw new InvalidOperationException();
+
+        return AllocateCore(amount);
+    }
+
+    private Money AllocateCore(int amount)
     {
         int fiveThousandRubCount = Math.Min(amount / 5000, FiveThousandRubCount);
         amount = amount - fiveThousandRubCount * 5000;

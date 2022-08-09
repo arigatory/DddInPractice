@@ -16,6 +16,7 @@ public class Snack : AggregateRoot
 
     private Snack(long id, string name) : this()
     {
+        Id = id;
         Name = name;
     }
 }

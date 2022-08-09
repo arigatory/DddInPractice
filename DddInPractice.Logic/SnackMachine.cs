@@ -24,6 +24,13 @@ public class SnackMachine : AggregateRoot
         return GetSlot(position).SnackPile;
     }
 
+    public virtual IReadOnlyList<SnackPile> GetAllSnackPiles()
+    {
+        return Slots.OrderBy(x=>x.Position)
+            .Select(x=>x.SnackPile)
+            .ToList();
+    }
+
     private Slot GetSlot(int position)
     {
         return Slots.Single(x => x.Position == position);
@@ -47,17 +54,32 @@ public class SnackMachine : AggregateRoot
         MoneyInTransaction = 0;
     }
 
+    public virtual string CanBuySnack(int position)
+    {
+        SnackPile snackPile = GetSnackPile(position);
+
+        if (snackPile.Quantity == 0)
+            return "Данный товар закончился";
+
+        if (MoneyInTransaction < snackPile.Price)
+            return "Недостаточно денег";
+
+        if (!MoneyInside.CanAllocate(MoneyInTransaction - snackPile.Price))
+            return "Нет сдачи";
+
+        return string.Empty;
+    }
+
     public virtual void BuySnack(int position)
     {
+        if(CanBuySnack(position) != string.Empty)
+            throw new InvalidOperationException();
+
+
         Slot slot = GetSlot(position);
-        if (slot.SnackPile.Price > MoneyInTransaction)
-            throw new InvalidOperationException();
-
         slot.SnackPile = slot.SnackPile.SubtractOne();
-        Money change = MoneyInside.Allocate(MoneyInTransaction - slot.SnackPile.Price);
-        if(change.Amount < MoneyInTransaction - slot.SnackPile.Price)
-            throw new InvalidOperationException();
 
+        Money change = MoneyInside.Allocate(MoneyInTransaction - slot.SnackPile.Price);
         MoneyInside -= change;
         MoneyInTransaction = 0;
     }

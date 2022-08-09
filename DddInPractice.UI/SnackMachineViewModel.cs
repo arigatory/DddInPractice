@@ -1,16 +1,29 @@
 ﻿using DddInPractice.Logic;
 using DddInPractice.UI.Common;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DddInPractice.UI;
 
 public class SnackMachineViewModel : ViewModel
 {
     private readonly SnackMachine _snackMashine;
+    private readonly SnackMachineRepository _repository;
 
     public override string Caption => "Snack Machine";
     public string MoneyInTransaction => _snackMashine.MoneyInTransaction.ToString();
     public Money MoneyInside => _snackMashine.MoneyInside;
+
+    public IReadOnlyList<SnackPileViewModel> Piles
+    {
+        get
+        {
+            return _snackMashine.GetAllSnackPiles()
+                .Select(x=> new SnackPileViewModel(x))
+                .ToList();
+        }
+    }
 
     private string _message = "";
     public string Message
@@ -30,11 +43,12 @@ public class SnackMachineViewModel : ViewModel
     public Command Insert1000RubCommand { get; private set; }
     public Command Insert5000RubCommand { get; private set; }
     public Command ReturnMoneyCommand { get; private set; }
-    public Command BuySnackCommand { get; private set; }
+    public Command<string> BuySnackCommand { get; private set; }
 
     public SnackMachineViewModel(SnackMachine snackMashine)
     {
         _snackMashine = snackMashine;
+        _repository = new SnackMachineRepository();
 
         Insert10RubCommand = new Command(()=>InsertMoney(Money.TenRub));
         Insert50RubCommand = new Command(()=>InsertMoney(Money.FiftyRub));
@@ -43,15 +57,25 @@ public class SnackMachineViewModel : ViewModel
         Insert1000RubCommand = new Command(()=>InsertMoney(Money.ThousandRub));
         Insert5000RubCommand = new Command(()=>InsertMoney(Money.FiveThousandRub));
         ReturnMoneyCommand = new Command(()=>ReturnMoney());
-        BuySnackCommand = new Command(()=> BuySnack());
+        BuySnackCommand = new Command<string>(BuySnack);
 
     }
 
-    private void BuySnack()
+    private void BuySnack(string positonString)
     {
-        _snackMashine.BuySnack(1);
-        NotifyClient("Вы купили товар");
+        int positon = int.Parse(positonString);
+        
+        string error = _snackMashine.CanBuySnack(positon);
 
+        if (error != string.Empty)
+        {
+            NotifyClient(error);
+            return;
+        }
+
+        _snackMashine.BuySnack(positon);
+        _repository.Save(_snackMashine);
+        NotifyClient("Вы купили товар");
     }
 
     private void ReturnMoney()
@@ -71,5 +95,6 @@ public class SnackMachineViewModel : ViewModel
         Message = message;
         Notify(nameof(MoneyInTransaction));
         Notify(nameof(MoneyInside));
+        Notify(nameof(Piles));
     }
 }
