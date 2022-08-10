@@ -1,4 +1,6 @@
-﻿namespace DddInPractice.Logic;
+﻿using DddInPractice.Logic.Common;
+
+namespace DddInPractice.Logic.SharedKernel;
 
 public sealed class Money : ValueObject<Money>
 {
@@ -68,7 +70,7 @@ public sealed class Money : ValueObject<Money>
 
     public Money Allocate(int amount)
     {
-        if(!CanAllocate(amount))
+        if (!CanAllocate(amount))
             throw new InvalidOperationException();
 
         return AllocateCore(amount);
@@ -150,11 +152,11 @@ public sealed class Money : ValueObject<Money>
         unchecked
         {
             int hashCode = TenRubCount;
-            hashCode = (hashCode * 397) ^ FiftyRubCount;
-            hashCode = (hashCode * 397) ^ HundredRubCount;
-            hashCode = (hashCode * 397) ^ FiveHundredRubCount;
-            hashCode = (hashCode * 397) ^ ThousandRubCount;
-            hashCode = (hashCode * 397) ^ FiveThousandRubCount;
+            hashCode = hashCode * 397 ^ FiftyRubCount;
+            hashCode = hashCode * 397 ^ HundredRubCount;
+            hashCode = hashCode * 397 ^ FiveHundredRubCount;
+            hashCode = hashCode * 397 ^ ThousandRubCount;
+            hashCode = hashCode * 397 ^ FiveThousandRubCount;
             return hashCode;
         }
     }

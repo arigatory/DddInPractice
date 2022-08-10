@@ -1,10 +1,11 @@
-﻿using DddInPractice.Logic;
+﻿using DddInPractice.Logic.SharedKernel;
+using DddInPractice.Logic.SnackMachines;
 using DddInPractice.UI.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DddInPractice.UI;
+namespace DddInPractice.UI.SnackMachines;
 
 public class SnackMachineViewModel : ViewModel
 {
@@ -20,7 +21,7 @@ public class SnackMachineViewModel : ViewModel
         get
         {
             return _snackMashine.GetAllSnackPiles()
-                .Select(x=> new SnackPileViewModel(x))
+                .Select(x => new SnackPileViewModel(x))
                 .ToList();
         }
     }
@@ -50,13 +51,13 @@ public class SnackMachineViewModel : ViewModel
         _snackMashine = snackMashine;
         _repository = new SnackMachineRepository();
 
-        Insert10RubCommand = new Command(()=>InsertMoney(Money.TenRub));
-        Insert50RubCommand = new Command(()=>InsertMoney(Money.FiftyRub));
-        Insert100RubCommand = new Command(()=>InsertMoney(Money.HundredRub));
-        Insert500RubCommand = new Command(()=>InsertMoney(Money.FiveHundredRub));
-        Insert1000RubCommand = new Command(()=>InsertMoney(Money.ThousandRub));
-        Insert5000RubCommand = new Command(()=>InsertMoney(Money.FiveThousandRub));
-        ReturnMoneyCommand = new Command(()=>ReturnMoney());
+        Insert10RubCommand = new Command(() => InsertMoney(Money.TenRub));
+        Insert50RubCommand = new Command(() => InsertMoney(Money.FiftyRub));
+        Insert100RubCommand = new Command(() => InsertMoney(Money.HundredRub));
+        Insert500RubCommand = new Command(() => InsertMoney(Money.FiveHundredRub));
+        Insert1000RubCommand = new Command(() => InsertMoney(Money.ThousandRub));
+        Insert5000RubCommand = new Command(() => InsertMoney(Money.FiveThousandRub));
+        ReturnMoneyCommand = new Command(() => ReturnMoney());
         BuySnackCommand = new Command<string>(BuySnack);
 
     }
@@ -64,7 +65,7 @@ public class SnackMachineViewModel : ViewModel
     private void BuySnack(string positonString)
     {
         int positon = int.Parse(positonString);
-        
+
         string error = _snackMashine.CanBuySnack(positon);
 
         if (error != string.Empty)

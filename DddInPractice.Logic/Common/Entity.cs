@@ -1,6 +1,6 @@
 ﻿using NHibernate.Proxy;
 
-namespace DddInPractice.Logic;
+namespace DddInPractice.Logic.Common;
 
 public abstract class Entity
 {
@@ -42,7 +42,7 @@ public abstract class Entity
 
     public override int GetHashCode()
     {
-        return(GetReadType().ToString() + Id).GetHashCode();
+        return (GetReadType().ToString() + Id).GetHashCode();
     }
 
     private Type GetReadType()

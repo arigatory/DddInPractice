@@ -1,4 +1,6 @@
-﻿using static DddInPractice.Logic.Money;
+﻿using DddInPractice.Logic.SnackMachines;
+using DddInPractice.Logic.Utils;
+using static DddInPractice.Logic.SharedKernel.Money;
 
 namespace DddInPractice.Tests;
 

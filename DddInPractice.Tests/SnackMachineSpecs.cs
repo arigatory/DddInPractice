@@ -1,6 +1,8 @@
 ﻿namespace DddInPractice.Tests;
-using static DddInPractice.Logic.Money;
-using static DddInPractice.Logic.Snack;
+
+using DddInPractice.Logic.SnackMachines;
+using static DddInPractice.Logic.SharedKernel.Money;
+using static DddInPractice.Logic.SnackMachines.Snack;
 
 public class SnackMachineSpecs
 {
