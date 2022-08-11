@@ -1,7 +1,11 @@
-﻿namespace DddInPractice.Logic;
-using static DddInPractice.Logic.Money;
+﻿using DddInPractice.Logic.Common;
+using DddInPractice.Logic.SharedKernel;
 
-public class SnackMachine : AggregateRoot 
+namespace DddInPractice.Logic.SnackMachines;
+
+using static DddInPractice.Logic.SharedKernel.Money;
+
+public class SnackMachine : AggregateRoot
 {
     public virtual Money MoneyInside { get; protected set; }
     public virtual int MoneyInTransaction { get; protected set; }
@@ -26,8 +30,8 @@ public class SnackMachine : AggregateRoot
 
     public virtual IReadOnlyList<SnackPile> GetAllSnackPiles()
     {
-        return Slots.OrderBy(x=>x.Position)
-            .Select(x=>x.SnackPile)
+        return Slots.OrderBy(x => x.Position)
+            .Select(x => x.SnackPile)
             .ToList();
     }
 
@@ -72,7 +76,7 @@ public class SnackMachine : AggregateRoot
 
     public virtual void BuySnack(int position)
     {
-        if(CanBuySnack(position) != string.Empty)
+        if (CanBuySnack(position) != string.Empty)
             throw new InvalidOperationException();
 
 

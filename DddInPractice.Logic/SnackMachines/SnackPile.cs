@@ -1,4 +1,6 @@
-﻿namespace DddInPractice.Logic;
+﻿using DddInPractice.Logic.Common;
+
+namespace DddInPractice.Logic.SnackMachines;
 
 public sealed class SnackPile : ValueObject<SnackPile>
 {
@@ -37,8 +39,8 @@ public sealed class SnackPile : ValueObject<SnackPile>
         unchecked
         {
             int hashCode = Snack.GetHashCode();
-            hashCode = (hashCode * 397) ^ Quantity;
-            hashCode = (hashCode * 397) ^ Price;
+            hashCode = hashCode * 397 ^ Quantity;
+            hashCode = hashCode * 397 ^ Price;
             return hashCode;
         }
     }

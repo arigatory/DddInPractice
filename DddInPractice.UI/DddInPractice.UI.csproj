@@ -39,7 +39,7 @@
     <Resource Include="Images\Gum.png" />
     <Resource Include="Images\Icon.png" />
     <Resource Include="Images\Soda.png" />
-    <Resource Include="SnackMachineViewModel.xaml">
+    <Resource Include="SnackMachines\SnackMachineViewModel.xaml">
       <Generator>XamlIntelliSenseFileGenerator</Generator>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

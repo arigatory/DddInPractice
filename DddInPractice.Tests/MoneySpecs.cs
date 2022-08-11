@@ -1,3 +1,5 @@
+using DddInPractice.Logic.SharedKernel;
+
 namespace DddInPractice.Tests;
 
 public class MoneySpecs
