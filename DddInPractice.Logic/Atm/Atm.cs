@@ -37,7 +37,7 @@ public class Atm : AggregateRoot
         MoneyCharged += amountWithCommission;
     }
 
-    private int CalculateAmountWithComission(int amount)
+    public virtual int CalculateAmountWithComission(int amount)
     {
         int commission = (int)Math.Ceiling(amount * CommissionRate);
         int lessThen10Rub = commission % 10;
@@ -48,7 +48,7 @@ public class Atm : AggregateRoot
         return amount + commission;
     }
 
-    public void LoadMoney(Money money)
+    public virtual void LoadMoney(Money money)
     {
         MoneyInside += money;
     }
