@@ -163,6 +163,6 @@ public sealed class Money : ValueObject<Money>
 
     public override string ToString()
     {
-        return Amount.ToString() + "₽";
+        return Amount.ToString("C0");
     }
 }

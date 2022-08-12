@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DddInPractice.Logic\DddInPractice.Logic.csproj" />
   </ItemGroup>
 
