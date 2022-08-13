@@ -1,4 +1,4 @@
-﻿using DddInPractice.Logic.Atm;
+﻿using DddInPractice.Logic.Atms;
 using DddInPractice.Logic.SharedKernel;
 using DddInPractice.UI.Common;
 using System;

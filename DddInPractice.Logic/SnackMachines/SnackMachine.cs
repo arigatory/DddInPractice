@@ -23,6 +23,16 @@ public class SnackMachine : AggregateRoot
         };
     }
 
+    public virtual Money UnloadMoney()
+    {
+        if (MoneyInTransaction > 0)
+            throw new InvalidOperationException();
+
+        Money money = MoneyInside;
+        MoneyInside = Money.None;
+        return money;
+    }
+
     public virtual SnackPile GetSnackPile(int position)
     {
         return GetSlot(position).SnackPile;

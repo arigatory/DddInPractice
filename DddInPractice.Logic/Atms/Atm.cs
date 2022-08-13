@@ -2,7 +2,7 @@
 using DddInPractice.Logic.SharedKernel;
 using static DddInPractice.Logic.SharedKernel.Money;
 
-namespace DddInPractice.Logic.Atm;
+namespace DddInPractice.Logic.Atms;
 
 public class Atm : AggregateRoot
 {

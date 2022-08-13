@@ -1,4 +1,4 @@
-﻿using DddInPractice.Logic.Atm;
+﻿using DddInPractice.Logic.Atms;
 using DddInPractice.Logic.Common;
 
 namespace DddInPractice.Logic.Management;
