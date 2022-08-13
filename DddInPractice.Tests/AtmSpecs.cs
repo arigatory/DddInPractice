@@ -1,4 +1,6 @@
 ﻿using DddInPractice.Logic.Atm;
+using DddInPractice.Logic.Common;
+using DddInPractice.Logic.Utils;
 using static DddInPractice.Logic.SharedKernel.Money;
 
 namespace DddInPractice.Tests;
@@ -38,5 +40,20 @@ public class AtmSpecs
         atm.TakeMoney(110);
 
         atm.MoneyCharged.Should().Be(120);
+    }
+
+    [Fact]
+    public void Take_money_raises_an_event()
+    {
+        Initer.Init(@"Server=(localdb)\mssqllocaldb;Database=DddInPractice;Trusted_Connection=true");
+        Atm atm = new Atm();
+        atm.LoadMoney(HundredRub);
+        BalanceChangedEvent balanceChangedEvent = null;
+        DomainEvents.Register<BalanceChangedEvent>(ev=> balanceChangedEvent = ev);
+        
+        atm.TakeMoney(100);
+
+        balanceChangedEvent.Should().NotBeNull();
+        balanceChangedEvent.Delta.Should().Be(110);
     }
 }

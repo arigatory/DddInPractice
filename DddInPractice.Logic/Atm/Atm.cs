@@ -26,7 +26,7 @@ public class Atm : AggregateRoot
 
     public virtual void TakeMoney(int amount)
     {
-        if (CanTakeMoney(amount)!=string.Empty)
+        if (CanTakeMoney(amount) != string.Empty)
         {
             throw new InvalidOperationException();
         }
@@ -35,6 +35,8 @@ public class Atm : AggregateRoot
 
         int amountWithCommission = CalculateAmountWithComission(amount);
         MoneyCharged += amountWithCommission;
+
+        AddDomainEvent(new BalanceChangedEvent(amountWithCommission));
     }
 
     public virtual int CalculateAmountWithComission(int amount)
