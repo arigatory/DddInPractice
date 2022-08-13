@@ -1,6 +1,6 @@
 ﻿using FluentNHibernate.Mapping;
 
-namespace DddInPractice.Logic.Atm;
+namespace DddInPractice.Logic.Atms;
 
 public class AtmMap : ClassMap<Atm>
 {
